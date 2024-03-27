@@ -1,0 +1,21 @@
+.product-card {
+  width: 15rem;
+  width: 15rem;
+  border-radius: 1rem;
+  box-shadow: 0px 10px 8px #999;
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem;
+  background-color: bisque;
+  height: fit-content;
+}
+
+.product-image {
+  width: 15rem; /* Set a fixed width */
+  height: 15rem; /* Set a fixed height */
+  overflow: hidden;
+}
+
+.product-details {
+  margin: 0.5rem 4%;
+}
