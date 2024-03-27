@@ -13,7 +13,9 @@ const App = () => {
     setSearchParams(params);
   };
   return (
-    <Layout>
+    <Layout
+      style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+    >
       <Header
         style={{
           position: "sticky",
@@ -27,10 +29,9 @@ const App = () => {
       >
         <SearchHeader onSearch={passSearch} />
       </Header>
-      <Content>
+      <Content style={{ flex: 1 }}>
         <Products searchParams={searchParams} />
       </Content>
-      <Footer>Footer</Footer>
     </Layout>
   );
 };

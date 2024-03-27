@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
-import "../styles/Products.css";
 import { filterByCategory } from "../helpers/filterByCategory";
+import { Modal } from "antd";
 
 const Products = ({ searchParams }) => {
   const [products, setProducts] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [productDetails, setProductDetails] = useState(null);
 
   useEffect(() => {
     const category = searchParams[0];
@@ -28,12 +30,38 @@ const Products = ({ searchParams }) => {
       });
   }, [searchParams]);
 
+  const handleProductClick = (product) => {
+    setProductDetails(product);
+  };
+  useEffect(() => {
+    if (productDetails) {
+      setIsModalOpen(true);
+    }
+  }, [productDetails]);
+
   return (
-    <div className="product-list">
+    <div
+      style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
+    >
       {products.length > 0 &&
-        products.map((product) => {
-          return <ProductCard key={product.id} data={product} />;
-        })}
+        products.map((product) => (
+          <div key={product.id} onClick={() => handleProductClick(product)}>
+            <ProductCard data={product} />
+          </div>
+        ))}
+      <Modal
+        title={productDetails?.title}
+        open={isModalOpen}
+        onOk={() => setIsModalOpen(false)}
+        destroyOnClose
+      >
+        {productDetails && (
+          <>
+            <p>Description: {productDetails.description}</p>
+            <p>Price: ${productDetails.price}</p>
+          </>
+        )}
+      </Modal>
     </div>
   );
 };
