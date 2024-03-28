@@ -40,7 +40,14 @@ const Products = ({ searchParams }) => {
   }, [productDetails]);
 
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", minHeight: "100vh" }}>
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        minHeight: "100vh",
+        flex: 1,
+      }}
+    >
       {products.length > 0 &&
         products.map((product) => (
           <div key={product.id} onClick={() => handleProductClick(product)}>
