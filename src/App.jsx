@@ -7,9 +7,9 @@ import React from "react";
 
 import { Layout, Menu } from "antd";
 import {
-  UploadOutlined,
   UserOutlined,
-  VideoCameraOutlined,
+  HistoryOutlined,
+  NotificationOutlined,
 } from "@ant-design/icons";
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -20,15 +20,22 @@ const App = () => {
   };
 
   const items = [
-    UserOutlined,
-    VideoCameraOutlined,
-    UploadOutlined,
-    UserOutlined,
-  ].map((icon, index) => ({
-    key: String(index + 1),
-    icon: React.createElement(icon),
-    label: `nav ${index + 1}`,
-  }));
+    {
+      key: 1,
+      icon: React.createElement(UserOutlined),
+      label: `Profile`,
+    },
+    {
+      key: 3,
+      icon: React.createElement(HistoryOutlined),
+      label: `Purchase history`,
+    },
+    {
+      key: 2,
+      icon: React.createElement(NotificationOutlined),
+      label: `Notifications`,
+    },
+  ];
   return (
     <Layout hasSider>
       <Sider
@@ -42,7 +49,7 @@ const App = () => {
       >
         <div
           style={{
-            height: "100px",
+            height: "90px",
             display: "flex",
             justifyContent: "center",
             alignContent: "center",
@@ -51,31 +58,42 @@ const App = () => {
         >
           <img src={ecomLogo} />
         </div>
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["4"]}
-          items={items}
-        />
+        <Menu theme="dark" mode="inline" items={items} />
+        {/* <div
+          style={{
+            height: "100%",
+            backgroundColor: "red",
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "end",
+          }}
+        >
+          <div>fdfd</div>
+        </div> */}
       </Sider>
       <Layout style={{ marginLeft: "17%" }}>
         <Header
           style={{
+            paddingLeft: "2rem",
             backgroundColor: "rgba(255, 255, 255, 0.5)",
             position: "sticky",
             top: 0,
             zIndex: 1,
-            height: "70px",
+            height: "90px",
             width: "100%",
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
-            backdropFilter: "blur(5px)",
+            backdropFilter: "blur(7px)",
           }}
         >
           <SearchHeader onSearch={passSearch} />
         </Header>
-        <Content style={{ flex: 1 }}>
+        <Content
+          style={{
+            paddingLeft: "2rem",
+          }}
+        >
           <Products searchParams={searchParams} />
         </Content>
       </Layout>

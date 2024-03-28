@@ -39,29 +39,8 @@ const Products = ({ searchParams }) => {
     }
   }, [productDetails]);
 
-  const modalStyles = {
-    header: {},
-    mask: {
-      backdropFilter: "blur(5px)",
-    },
-    footer: {
-      backgroundColor: "#f0f0f0",
-      padding: "0.5rem",
-      borderTopWidth: "1px",
-      borderTopStyle: "solid",
-      borderTopColor: "#e0e0e0",
-      display: "flex",
-      justifyContent: "flex-end",
-    },
-    content: {
-      flex: 1,
-    },
-  };
-
   return (
-    <div
-      style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
-    >
+    <div style={{ display: "flex", flexWrap: "wrap", minHeight: "100vh" }}>
       {products.length > 0 &&
         products.map((product) => (
           <div key={product.id} onClick={() => handleProductClick(product)}>
@@ -70,14 +49,12 @@ const Products = ({ searchParams }) => {
         ))}
       <Modal
         width={1000}
-        styles={modalStyles}
         title={productDetails?.title}
         open={isModalOpen}
         onOk={() => {
           setIsModalOpen(false);
           setProductDetails(null);
         }}
-        destroyOnClose
       >
         {productDetails && (
           <div style={{ display: "flex", flexDirection: "row" }}>

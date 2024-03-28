@@ -17,7 +17,6 @@ const ProductCard = ({ data }) => {
   return (
     <div
       style={{
-        width: "270px",
         border: "1px solid #ddd",
         borderRadius: "4px",
         overflow: "hidden",
@@ -25,7 +24,8 @@ const ProductCard = ({ data }) => {
         transition: "box-shadow 0.3s ease",
         display: "flex",
         flexDirection: "column",
-        margin: "0.5rem",
+        marginRight: "1rem",
+        marginBottom: "1rem",
       }}
       onMouseEnter={(e) =>
         (e.currentTarget.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)")
