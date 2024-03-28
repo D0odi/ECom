@@ -25,6 +25,24 @@ const App = () => {
   const [searchParams, setSearchParams] = useState(["", ""]);
   const [shoppingCartToggle, setShoppingCarttoggle] = useState(false);
 
+  const addToShoppingCart = (id) => {
+    fetch("https://dummyjson.com/carts/1", {
+      method: "PUT" /* or PATCH */,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        merge: true,
+        products: [
+          {
+            id: id,
+            quantity: 1,
+          },
+        ],
+      }),
+    })
+      .then((res) => res.json())
+      .then(console.log);
+  };
+
   const passSearch = (params) => {
     setSearchParams(params);
   };
@@ -96,7 +114,10 @@ const App = () => {
             justifyContent: "center",
           }}
         >
-          <Products searchParams={searchParams} />
+          <Products
+            searchParams={searchParams}
+            addToShoppingCart={addToShoppingCart}
+          />
           <ShoppingCart shoppingCartToggle={shoppingCartToggle} />
         </div>
       </Content>

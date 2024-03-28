@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
 import { filterByCategory } from "../helpers/filterByCategory";
-import { Divider, Modal, Row } from "antd";
+import { Modal, Button } from "antd";
 
-const Products = ({ searchParams }) => {
+const Products = ({ searchParams, addToShoppingCart }) => {
   const [products, setProducts] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [productDetails, setProductDetails] = useState(null);
@@ -55,13 +55,25 @@ const Products = ({ searchParams }) => {
           </div>
         ))}
       <Modal
-        width={1000}
+        width={700}
         title={productDetails?.title}
         open={isModalOpen}
-        onOk={() => {
+        onCancel={() => {
           setIsModalOpen(false);
           setProductDetails(null);
         }}
+        footer={[
+          <Button
+            key="add"
+            onClick={() => {
+              addToShoppingCart(productDetails.id);
+              setIsModalOpen(false);
+              setProductDetails(null);
+            }}
+          >
+            Add to Cart
+          </Button>,
+        ]}
       >
         {productDetails && (
           <div style={{ display: "flex", flexDirection: "row" }}>
@@ -69,7 +81,7 @@ const Products = ({ searchParams }) => {
               src={productDetails.thumbnail}
               alt={productDetails.title}
               style={{
-                maxWidth: "50%",
+                maxWidth: "300px",
                 marginRight: "1rem",
                 objectFit: "cover",
               }}
