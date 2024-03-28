@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
 import { filterByCategory } from "../helpers/filterByCategory";
-import { Modal, Button } from "antd";
+import { Modal, Button, InputNumber } from "antd";
 
 const Products = ({ searchParams, addToShoppingCart }) => {
   const [products, setProducts] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [productDetails, setProductDetails] = useState(null);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     const category = searchParams[0];
@@ -30,9 +31,6 @@ const Products = ({ searchParams, addToShoppingCart }) => {
       });
   }, [searchParams]);
 
-  const handleProductClick = (product) => {
-    setProductDetails(product);
-  };
   useEffect(() => {
     if (productDetails) {
       setIsModalOpen(true);
@@ -50,30 +48,18 @@ const Products = ({ searchParams, addToShoppingCart }) => {
     >
       {products.length > 0 &&
         products.map((product) => (
-          <div key={product.id} onClick={() => handleProductClick(product)}>
+          <div key={product.id} onClick={() => setProductDetails(product)}>
             <ProductCard data={product} />
           </div>
         ))}
       <Modal
-        width={700}
         title={productDetails?.title}
         open={isModalOpen}
         onCancel={() => {
           setIsModalOpen(false);
           setProductDetails(null);
         }}
-        footer={[
-          <Button
-            key="add"
-            onClick={() => {
-              addToShoppingCart(productDetails.id);
-              setIsModalOpen(false);
-              setProductDetails(null);
-            }}
-          >
-            Add to Cart
-          </Button>,
-        ]}
+        footer={[]}
       >
         {productDetails && (
           <div style={{ display: "flex", flexDirection: "row" }}>
@@ -81,7 +67,8 @@ const Products = ({ searchParams, addToShoppingCart }) => {
               src={productDetails.thumbnail}
               alt={productDetails.title}
               style={{
-                maxWidth: "300px",
+                maxWidth: "60%",
+                height: "300px",
                 marginRight: "1rem",
                 objectFit: "cover",
               }}
@@ -91,10 +78,33 @@ const Products = ({ searchParams, addToShoppingCart }) => {
               style={{
                 display: "flex",
                 flexDirection: "column",
+                justifyContent: "space-between",
+                maxWidth: "60%",
               }}
             >
-              <h4 style={{ margin: 0 }}>Description: </h4>
-              <p style={{ margin: 0 }}>{productDetails.description}</p>
+              <div>
+                <h4 style={{ margin: 0 }}>Description: </h4>
+                <p style={{ margin: 0 }}>{productDetails.description}</p>
+              </div>
+              <div style={{ display: "flex" }}>
+                <InputNumber
+                  key="count"
+                  min={1}
+                  max={productDetails?.stock}
+                  defaultValue={1}
+                  onChange={(val) => setQuantity(val)}
+                />
+                <Button
+                  key="add"
+                  onClick={() => {
+                    addToShoppingCart(productDetails.id, quantity);
+                    setIsModalOpen(false);
+                    setProductDetails(null);
+                  }}
+                >
+                  Add to Cart
+                </Button>
+              </div>
             </div>
           </div>
         )}

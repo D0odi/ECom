@@ -3,7 +3,7 @@ import ShoppingCart from "./components/ShoppingCart.jsx";
 import Products from "./components/Products.jsx";
 import ecomLogo from "../assets/ECom-logo.png";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Badge, Layout } from "antd";
 import {
@@ -24,23 +24,39 @@ const style = {
 const App = () => {
   const [searchParams, setSearchParams] = useState(["", ""]);
   const [shoppingCartToggle, setShoppingCarttoggle] = useState(false);
+  const [shoppingCartCount, setShoppingCartCount] = useState(0);
+  const [shoppingCartProducts, setShoppingCartProducts] = useState([]);
 
-  const addToShoppingCart = (id) => {
+  useEffect(() => {
+    console.log("shoppingCartProducts:", shoppingCartProducts);
+  }, [shoppingCartProducts]);
+
+  const addToShoppingCart = (id, quantity) => {
     fetch("https://dummyjson.com/carts/1", {
-      method: "PUT" /* or PATCH */,
-      headers: { "Content-Type": "application/json" },
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
-        merge: true,
+        merge: false,
         products: [
           {
-            id: id,
-            quantity: 1,
+            id,
+            quantity,
           },
         ],
       }),
     })
-      .then((res) => res.json())
-      .then(console.log);
+      .then((res) => {
+        if (!res.ok)
+          throw new Error(`Error adding item to shopping cart: ${res.status}`);
+        return res.json();
+      })
+      .then((data) => {
+        setShoppingCartProducts((prev) => [...prev, data.products[0]]);
+        setShoppingCartCount((prev) => ++prev);
+      })
+      .catch((error) => console.log(error));
   };
 
   const passSearch = (params) => {
@@ -81,7 +97,7 @@ const App = () => {
               justifyContent: "end",
             }}
           >
-            <Badge count={1} offset={[-13, 2]}>
+            <Badge count={shoppingCartCount} offset={[-13, 2]}>
               <ShoppingCartOutlined
                 style={style.icon}
                 onClick={() => setShoppingCarttoggle((prev) => !prev)}
@@ -118,7 +134,10 @@ const App = () => {
             searchParams={searchParams}
             addToShoppingCart={addToShoppingCart}
           />
-          <ShoppingCart shoppingCartToggle={shoppingCartToggle} />
+          <ShoppingCart
+            shoppingCartToggle={shoppingCartToggle}
+            shoppingCartProducts={shoppingCartProducts}
+          />
         </div>
       </Content>
     </Layout>

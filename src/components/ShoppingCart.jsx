@@ -1,16 +1,22 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const ShoppingCart = ({ shoppingCartToggle }) => {
+const ShoppingCart = ({ shoppingCartToggle, shoppingCartProducts }) => {
+  const shoppingCartStyles = {
+    visible: { opacity: 1, transform: "translateX(0)" },
+    hidden: { opacity: 0, transform: "translateX(20%)" },
+  };
+
   return (
     <motion.div
-      animate={{
-        width: shoppingCartToggle ? "20%" : 0,
-        opacity: shoppingCartToggle ? 1 : 0,
-      }}
+      initial={"hidden"}
+      animate={shoppingCartToggle ? "visible" : "hidden"}
+      variants={shoppingCartStyles}
       transition={{ duration: 0.5, ease: "easeInOut" }}
       style={{
-        width: 0,
+        width: "20%",
+        backdropFilter: "blur(10px)",
+        // backgroundColor: "rgba(255, 255, 255, 0.7)",
         backgroundColor: "red",
         overflow: "hidden",
         position: "fixed",
@@ -19,7 +25,7 @@ const ShoppingCart = ({ shoppingCartToggle }) => {
         top: "90px",
       }}
     >
-      list
+      {`${shoppingCartProducts}`}
     </motion.div>
   );
 };
