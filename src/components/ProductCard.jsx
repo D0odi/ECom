@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ProductCard = ({ data, setProductDetails }) => {
+const ProductCard = ({ data }) => {
   const {
     id,
     title,
@@ -33,20 +33,6 @@ const ProductCard = ({ data, setProductDetails }) => {
       onMouseLeave={(e) =>
         (e.currentTarget.style.boxShadow = "0 2px 4px rgba(0, 0, 0, 0.1)")
       }
-      // onClick={() =>
-      //   setProductDetails({
-      //     title,
-      //     id,
-      //     description,
-      //     price,
-      //     discountPercentage,
-      //     rating,
-      //     stock,
-      //     brand,
-      //     category,
-      //     thumbnail,
-      //   })
-      // }
     >
       <img
         src={thumbnail}

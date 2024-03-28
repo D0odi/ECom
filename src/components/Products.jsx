@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
 import { filterByCategory } from "../helpers/filterByCategory";
-import { Modal } from "antd";
+import { Divider, Modal, Row } from "antd";
 
 const Products = ({ searchParams }) => {
   const [products, setProducts] = useState([]);
@@ -39,6 +39,25 @@ const Products = ({ searchParams }) => {
     }
   }, [productDetails]);
 
+  const modalStyles = {
+    header: {},
+    mask: {
+      backdropFilter: "blur(5px)",
+    },
+    footer: {
+      backgroundColor: "#f0f0f0",
+      padding: "0.5rem",
+      borderTopWidth: "1px",
+      borderTopStyle: "solid",
+      borderTopColor: "#e0e0e0",
+      display: "flex",
+      justifyContent: "flex-end",
+    },
+    content: {
+      flex: 1,
+    },
+  };
+
   return (
     <div
       style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
@@ -50,16 +69,38 @@ const Products = ({ searchParams }) => {
           </div>
         ))}
       <Modal
+        width={1000}
+        styles={modalStyles}
         title={productDetails?.title}
         open={isModalOpen}
-        onOk={() => setIsModalOpen(false)}
+        onOk={() => {
+          setIsModalOpen(false);
+          setProductDetails(null);
+        }}
         destroyOnClose
       >
         {productDetails && (
-          <>
-            <p>Description: {productDetails.description}</p>
-            <p>Price: ${productDetails.price}</p>
-          </>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <img
+              src={productDetails.thumbnail}
+              alt={productDetails.title}
+              style={{
+                maxWidth: "50%",
+                marginRight: "1rem",
+                objectFit: "cover",
+              }}
+            />
+
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <h4 style={{ margin: 0 }}>Description: </h4>
+              <p style={{ margin: 0 }}>{productDetails.description}</p>
+            </div>
+          </div>
         )}
       </Modal>
     </div>
