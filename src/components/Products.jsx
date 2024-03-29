@@ -13,7 +13,7 @@ const Products = ({ searchParams, addToShoppingCart }) => {
     const category = searchParams[0];
     const searchInput = searchParams[1];
 
-    let url = "https://dummyjson.com/products?limit=10";
+    let url = "https://dummyjson.com/products";
     if (searchInput) {
       url = `https://dummyjson.com/products/search?q=${searchInput}`;
     } else if (category) {

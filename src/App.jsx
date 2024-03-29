@@ -118,16 +118,14 @@ const App = () => {
         </div>
       </Header>
       <Content>
-        <div>
-          <Products
-            searchParams={searchParams}
-            addToShoppingCart={addToShoppingCart}
-          />
-          <ShoppingCart
-            shoppingCartToggle={shoppingCartToggle}
-            shoppingCartProducts={shoppingCartProducts}
-          />
-        </div>
+        <ShoppingCart
+          shoppingCartToggle={shoppingCartToggle}
+          shoppingCartProducts={shoppingCartProducts}
+        />
+        <Products
+          searchParams={searchParams}
+          addToShoppingCart={addToShoppingCart}
+        />
       </Content>
     </Layout>
   );
