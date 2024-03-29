@@ -27,11 +27,11 @@ const App = () => {
   const [shoppingCartCount, setShoppingCartCount] = useState(0);
   const [shoppingCartProducts, setShoppingCartProducts] = useState([]);
 
-  useEffect(() => {
-    console.log("shoppingCartProducts:", shoppingCartProducts);
-  }, [shoppingCartProducts]);
+  // useEffect(() => {
+  //   console.log("shoppingCartProducts:", shoppingCartProducts);
+  // }, [shoppingCartProducts]);
 
-  const addToShoppingCart = (id, quantity) => {
+  const addToShoppingCart = (id) => {
     fetch("https://dummyjson.com/carts/1", {
       method: "PUT",
       headers: {
@@ -42,7 +42,7 @@ const App = () => {
         products: [
           {
             id,
-            quantity,
+            quantity: 1,
           },
         ],
       }),
@@ -117,19 +117,8 @@ const App = () => {
           </div>
         </div>
       </Header>
-      <Content
-        style={{
-          paddingLeft: "2rem",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flex: 1,
-            flexDirection: "row",
-            justifyContent: "center",
-          }}
-        >
+      <Content>
+        <div>
           <Products
             searchParams={searchParams}
             addToShoppingCart={addToShoppingCart}

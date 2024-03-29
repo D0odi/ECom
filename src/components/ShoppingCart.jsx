@@ -14,6 +14,7 @@ const ShoppingCart = ({ shoppingCartToggle, shoppingCartProducts }) => {
       variants={shoppingCartStyles}
       transition={{ duration: 0.5, ease: "easeInOut" }}
       style={{
+        minWidth: "200px",
         width: "20%",
         backdropFilter: "blur(10px)",
         // backgroundColor: "rgba(255, 255, 255, 0.7)",

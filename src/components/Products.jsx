@@ -13,7 +13,7 @@ const Products = ({ searchParams, addToShoppingCart }) => {
     const category = searchParams[0];
     const searchInput = searchParams[1];
 
-    let url = "https://dummyjson.com/products";
+    let url = "https://dummyjson.com/products?limit=10";
     if (searchInput) {
       url = `https://dummyjson.com/products/search?q=${searchInput}`;
     } else if (category) {
@@ -42,7 +42,7 @@ const Products = ({ searchParams, addToShoppingCart }) => {
       style={{
         display: "flex",
         flexWrap: "wrap",
-        minHeight: "100vh",
+        paddingLeft: "2rem",
         flex: 1,
       }}
     >
@@ -53,7 +53,6 @@ const Products = ({ searchParams, addToShoppingCart }) => {
           </div>
         ))}
       <Modal
-        title={productDetails?.title}
         open={isModalOpen}
         onCancel={() => {
           setIsModalOpen(false);
@@ -86,18 +85,12 @@ const Products = ({ searchParams, addToShoppingCart }) => {
                 <h4 style={{ margin: 0 }}>Description: </h4>
                 <p style={{ margin: 0 }}>{productDetails.description}</p>
               </div>
-              <div style={{ display: "flex" }}>
-                <InputNumber
-                  key="count"
-                  min={1}
-                  max={productDetails?.stock}
-                  defaultValue={1}
-                  onChange={(val) => setQuantity(val)}
-                />
+              <div style={{ display: "flex", justifyContent: "end" }}>
                 <Button
+                  type="primary"
                   key="add"
                   onClick={() => {
-                    addToShoppingCart(productDetails.id, quantity);
+                    addToShoppingCart(productDetails.id);
                     setIsModalOpen(false);
                     setProductDetails(null);
                   }}
