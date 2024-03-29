@@ -1,10 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { List } from "antd";
+import { Button, Flex, InputNumber, List } from "antd";
+import Input from "antd/es/input/Input";
 
 const ShoppingCart = ({ shoppingCartToggle, shoppingCartProducts }) => {
   const shoppingCartStyles = {
-    visible: { opacity: 1, transform: "translateX(0)", width: "20%" },
+    visible: { opacity: 1, transform: "translateX(0)", width: "23%" },
     hidden: { opacity: 0, transform: "translateX(20%)", width: 0 },
   };
 
@@ -16,15 +17,14 @@ const ShoppingCart = ({ shoppingCartToggle, shoppingCartProducts }) => {
       transition={{ duration: 0.5, ease: "easeInOut" }}
       style={{
         backdropFilter: "blur(10px)",
-        backgroundColor: "rgba(255, 255, 255, 0.7)",
-        overflow: "hidden",
+        backgroundColor: "rgba(255, 255, 255, 1)",
+        overflow: "auto",
         position: "fixed",
         zIndex: 1,
         right: 0,
         bottom: 0,
         top: "90px",
-        padding: 10,
-        paddingRight: 0,
+        padding: 7,
       }}
     >
       {shoppingCartProducts.length > 0 ? (
@@ -36,15 +36,79 @@ const ShoppingCart = ({ shoppingCartToggle, shoppingCartProducts }) => {
               flexDirection: "row",
               display: "flex",
               height: "70px",
-              backgroundColor: "red",
+              justifyContent: "center",
+              marginBlock: 10,
             }}
           >
-            <div>
-              <img src={product.thumbnail} style={{ height: 70 }} />
+            <div
+              style={{
+                display: "flex",
+                flex: 3,
+                justifyContent: "center",
+                alignItems: "flex-end",
+                overflow: "hidden",
+              }}
+            >
+              <img
+                src={product.thumbnail}
+                style={{
+                  height: 60,
+                  borderLeft: "3px solid #1677ff",
+                  borderRadius: 3,
+                }}
+              />
             </div>
-            <div style={{ flexDirection: "column" }}>
-              <h3>{product.title}</h3>
-              <p>Price: ${product.price}</p>
+            <div
+              style={{
+                marginLeft: 10,
+                display: "flex",
+                flexDirection: "column",
+                flex: 5,
+                paddingRight: 20,
+                justifyContent: "flex-end",
+                overflow: "hidden",
+              }}
+            >
+              <h3
+                style={{
+                  margin: 0,
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {product.title}
+              </h3>
+              <h4
+                style={{
+                  margin: 0,
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {product.title}
+              </h4>
+              <p
+                style={{
+                  margin: 0,
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                ${product.price}
+              </p>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+                justifyContent: "flex-end",
+              }}
+            >
+              <InputNumber size="medium" />
             </div>
           </div>
         ))

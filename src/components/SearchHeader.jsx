@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Button, Input, Select, Space } from "antd";
 import { prettifyCategory } from "../helpers/prettifyCategory";
 import { SearchOutlined } from "@ant-design/icons";
-const { Search } = Input;
 
 const SearchHeader = ({ onSearch }) => {
   const [categories, setCategories] = useState([]);
