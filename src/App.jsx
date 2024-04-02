@@ -1,9 +1,9 @@
 import SearchHeader from "./components/SearchHeader.jsx";
-import ShoppingCart from "./components/ShoppingCart.jsx";
+import ShoppingCartSider from "./components/ShoppingCartSider.jsx";
 import Products from "./components/Products.jsx";
 import ecomLogo from "../assets/ECom-logo.png";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { Badge, Layout } from "antd";
 import {
@@ -23,15 +23,10 @@ const style = {
 
 const App = () => {
   const [searchParams, setSearchParams] = useState(["", ""]);
-  const [shoppingCartToggle, setShoppingCarttoggle] = useState(false);
-  const [shoppingCartCount, setShoppingCartCount] = useState(0);
+  const [siderToggle, setSiderToggle] = useState(false);
   const [shoppingCartProducts, setShoppingCartProducts] = useState([]);
 
-  // useEffect(() => {
-  //   console.log("shoppingCartProducts:", shoppingCartProducts);
-  // }, [shoppingCartProducts]);
-
-  const addToShoppingCart = (id) => {
+  const cartUpdate = (id, quantity = 1) => {
     fetch("https://dummyjson.com/carts/1", {
       method: "PUT",
       headers: {
@@ -42,7 +37,7 @@ const App = () => {
         products: [
           {
             id,
-            quantity: 1,
+            quantity,
           },
         ],
       }),
@@ -53,14 +48,29 @@ const App = () => {
         return res.json();
       })
       .then((data) => {
-        setShoppingCartProducts((prev) => [...prev, data.products[0]]);
-        setShoppingCartCount((prev) => ++prev);
-      })
-      .catch((error) => console.log(error));
-  };
+        setShoppingCartProducts((prev) => {
+          const updatedProduct = data.products[0];
 
-  const passSearch = (params) => {
-    setSearchParams(params);
+          if (updatedProduct.quantity === 0) {
+            return prev.filter((product) => product.id !== updatedProduct.id);
+          }
+
+          const alreadyExists = prev.some(
+            (product) => product.id === updatedProduct.id
+          );
+
+          if (!alreadyExists) {
+            return [...prev, updatedProduct];
+          } else {
+            return prev.map((product) =>
+              product.id === updatedProduct.id ? updatedProduct : product
+            );
+          }
+        });
+      })
+      .catch((error) => {
+        console.log("Error updating cart:", error);
+      });
   };
 
   return (
@@ -80,7 +90,7 @@ const App = () => {
           backdropFilter: "blur(10px)",
         }}
       >
-        <SearchHeader onSearch={passSearch} />
+        <SearchHeader setSearchParams={setSearchParams} />
         <div
           style={{
             height: "90px",
@@ -97,10 +107,10 @@ const App = () => {
               justifyContent: "end",
             }}
           >
-            <Badge count={shoppingCartCount} offset={[-13, 2]}>
+            <Badge count={shoppingCartProducts.length} offset={[-13, 2]}>
               <ShoppingCartOutlined
                 style={style.icon}
-                onClick={() => setShoppingCarttoggle((prev) => !prev)}
+                onClick={() => setSiderToggle((prev) => !prev)}
               />
             </Badge>
             <UserOutlined style={style.icon} />
@@ -118,13 +128,15 @@ const App = () => {
         </div>
       </Header>
       <Content>
-        <ShoppingCart
-          shoppingCartToggle={shoppingCartToggle}
+        <ShoppingCartSider
+          siderToggle={siderToggle}
           shoppingCartProducts={shoppingCartProducts}
+          cartUpdate={cartUpdate}
         />
         <Products
           searchParams={searchParams}
-          addToShoppingCart={addToShoppingCart}
+          cartUpdate={cartUpdate}
+          shoppingCartProducts={shoppingCartProducts}
         />
       </Content>
     </Layout>

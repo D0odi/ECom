@@ -1,18 +1,7 @@
 import React, { useState } from "react";
 
 const ProductCard = ({ data }) => {
-  const {
-    id,
-    title,
-    description,
-    price,
-    discountPercentage,
-    rating,
-    stock,
-    brand,
-    category,
-    thumbnail,
-  } = data;
+  const { title, price, thumbnail } = data;
 
   return (
     <div
@@ -33,6 +22,9 @@ const ProductCard = ({ data }) => {
       onMouseLeave={(e) =>
         (e.currentTarget.style.boxShadow = "0 2px 4px rgba(0, 0, 0, 0.1)")
       }
+      onMouseOver={(e) => {
+        e.target.style.cursor = "pointer";
+      }}
     >
       <img
         src={thumbnail}

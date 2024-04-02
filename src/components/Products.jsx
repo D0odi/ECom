@@ -3,11 +3,15 @@ import ProductCard from "./ProductCard";
 import { filterByCategory } from "../helpers/filterByCategory";
 import { Modal, Button, InputNumber } from "antd";
 
-const Products = ({ searchParams, addToShoppingCart }) => {
+const Products = ({ searchParams, cartUpdate, shoppingCartProducts }) => {
   const [products, setProducts] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [productDetails, setProductDetails] = useState(null);
   const [quantity, setQuantity] = useState(1);
+
+  let isProductInCart =
+    productDetails &&
+    shoppingCartProducts.some((item) => item.id === productDetails.id);
 
   useEffect(() => {
     const category = searchParams[0];
@@ -58,7 +62,7 @@ const Products = ({ searchParams, addToShoppingCart }) => {
           setIsModalOpen(false);
           setProductDetails(null);
         }}
-        footer={[]}
+        footer={null}
       >
         {productDetails && (
           <div style={{ display: "flex", flexDirection: "row" }}>
@@ -89,13 +93,18 @@ const Products = ({ searchParams, addToShoppingCart }) => {
                 <Button
                   type="primary"
                   key="add"
+                  style={{
+                    color: isProductInCart ? "#1677ff" : "",
+                    borderColor: isProductInCart ? "#1677ff" : "",
+                  }}
+                  disabled={isProductInCart}
                   onClick={() => {
-                    addToShoppingCart(productDetails.id);
+                    cartUpdate(productDetails.id);
                     setIsModalOpen(false);
                     setProductDetails(null);
                   }}
                 >
-                  Add to Cart
+                  {isProductInCart ? "In Cart" : "Add to Cart"}
                 </Button>
               </div>
             </div>

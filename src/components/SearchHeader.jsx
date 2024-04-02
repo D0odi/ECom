@@ -3,7 +3,7 @@ import { Button, Input, Select, Space } from "antd";
 import { prettifyCategory } from "../helpers/prettifyCategory";
 import { SearchOutlined } from "@ant-design/icons";
 
-const SearchHeader = ({ onSearch }) => {
+const SearchHeader = ({ setSearchParams }) => {
   const [categories, setCategories] = useState([]);
 
   const [category, setCategory] = useState("");
@@ -56,7 +56,7 @@ const SearchHeader = ({ onSearch }) => {
         size="large"
         icon={<SearchOutlined />}
         style={{ width: "4rem" }}
-        onClick={() => onSearch([category, searchInput])}
+        onClick={() => setSearchParams([category, searchInput])}
       />
     </Space.Compact>
   );
