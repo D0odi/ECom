@@ -133,17 +133,15 @@ const ShoppingCartSider = ({
         }}
       >
         <Button
-          border
           type="primary"
           block
           size="large"
           disabled={total <= 0}
           style={{
             color: total <= 0 ? "#1677ff" : "",
-            borderColor: total <= 0 ? "#1677ff" : "",
             borderRadius: 0,
             height: 50,
-            fontSize: 20,
+            fontSize: 16,
           }}
         >
           {total <= 0 ? `Add items to the cart` : `Checkout ${total}$`}

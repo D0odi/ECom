@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
 import { filterByCategory } from "../helpers/filterByCategory";
-import { Modal, Button, InputNumber } from "antd";
+import { Modal, Button } from "antd";
 
 const Products = ({ searchParams, cartUpdate, shoppingCartProducts }) => {
   const [products, setProducts] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [productDetails, setProductDetails] = useState(null);
-  const [quantity, setQuantity] = useState(1);
 
   let isProductInCart =
     productDetails &&
@@ -48,6 +47,7 @@ const Products = ({ searchParams, cartUpdate, shoppingCartProducts }) => {
         flexWrap: "wrap",
         paddingLeft: "2rem",
         flex: 1,
+        overflow: "auto",
       }}
     >
       {products.length > 0 &&

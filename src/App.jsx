@@ -11,7 +11,7 @@ import {
   TwitterOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
-const { Header, Content } = Layout;
+const { Header } = Layout;
 
 const style = {
   icon: {
@@ -74,7 +74,7 @@ const App = () => {
   };
 
   return (
-    <Layout>
+    <Layout style={{ position: "absolute", padding: 0 }}>
       <Header
         style={{
           paddingLeft: "2rem",
@@ -105,6 +105,7 @@ const App = () => {
               flex: 1,
               alignItems: "center",
               justifyContent: "end",
+              overflow: "hidden",
             }}
           >
             <Badge count={shoppingCartProducts.length} offset={[-13, 2]}>
@@ -127,18 +128,16 @@ const App = () => {
           </div>
         </div>
       </Header>
-      <Content>
-        <ShoppingCartSider
-          siderToggle={siderToggle}
-          shoppingCartProducts={shoppingCartProducts}
-          cartUpdate={cartUpdate}
-        />
-        <Products
-          searchParams={searchParams}
-          cartUpdate={cartUpdate}
-          shoppingCartProducts={shoppingCartProducts}
-        />
-      </Content>
+      <ShoppingCartSider
+        siderToggle={siderToggle}
+        shoppingCartProducts={shoppingCartProducts}
+        cartUpdate={cartUpdate}
+      />
+      <Products
+        searchParams={searchParams}
+        cartUpdate={cartUpdate}
+        shoppingCartProducts={shoppingCartProducts}
+      />
     </Layout>
   );
 };
