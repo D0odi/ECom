@@ -22,15 +22,13 @@ const SearchHeader = ({ setSearchParams }) => {
               });
               return options;
             },
-            [
-              {
-                value: "",
-                label: "All Categories",
-              },
-            ]
+            [{ value: "", label: "All Categories" }]
           );
         })
-      );
+      )
+      .catch((error) => {
+        console.error("Error fetching categories:", error);
+      });
   }, []);
 
   return (

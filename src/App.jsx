@@ -74,7 +74,9 @@ const App = () => {
   };
 
   return (
-    <Layout style={{ position: "absolute", padding: 0 }}>
+    <Layout
+      style={{ position: "absolute", padding: 0, top: 0, right: 0, left: 0 }}
+    >
       <Header
         style={{
           paddingLeft: "2rem",
@@ -83,7 +85,6 @@ const App = () => {
           top: 0,
           zIndex: 1,
           height: "90px",
-          width: "100%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -105,7 +106,6 @@ const App = () => {
               flex: 1,
               alignItems: "center",
               justifyContent: "end",
-              overflow: "hidden",
             }}
           >
             <Badge count={shoppingCartProducts.length} offset={[-13, 2]}>

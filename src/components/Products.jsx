@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import ProductCard from "./ProductCard";
+import ProductCard from "./cards/ProductCard";
 import { filterByCategory } from "../helpers/filterByCategory";
 import { Modal, Button } from "antd";
 
@@ -15,7 +15,6 @@ const Products = ({ searchParams, cartUpdate, shoppingCartProducts }) => {
   useEffect(() => {
     const category = searchParams[0];
     const searchInput = searchParams[1];
-
     let url = "https://dummyjson.com/products";
     if (searchInput) {
       url = `https://dummyjson.com/products/search?q=${searchInput}`;
@@ -24,13 +23,21 @@ const Products = ({ searchParams, cartUpdate, shoppingCartProducts }) => {
     }
 
     fetch(url)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error ${res.status}`);
+        }
+        return res.json();
+      })
       .then((data) => {
         if (searchInput && category) {
           setProducts(filterByCategory(data.products, category));
         } else {
           setProducts(data.products);
         }
+      })
+      .catch((error) => {
+        console.error("Error fetching products:", error);
       });
   }, [searchParams]);
 
